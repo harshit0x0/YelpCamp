@@ -1,21 +1,13 @@
-<!DOCTYPE html>
-<html lang="en">
+<% layout('layouts/boilerPlate') %>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>sHOW</title>
-</head>
+<h1> <%= campground.title %> </h1>
+<p> <%= campground.location %></p>
+<img src="<%= campground.image %>" style="width: 20%;" alt="">
+<p> <%= campground.description %> </p>
+<p> $<%= campground.price %></p>
 
-<body>
-    <h1> <%= campground.title %> </h1>
-    <p> <%= campground.location %></p>
-    <p> <%= campground.price %></p>
-    <a href="/campground/<%= campground._id %>/edit">edit campground</a>
-    <a href="/campgrounds">back to index</a>
-    <form action="/campgrounds/<%= campground._id %>?_method=DELETE" method="POST">
-        <button>Delete campground</button>
-    </form>
-</body>
-
-</html>
+<a class="btn btn-secondary" href="/campground/<%= campground._id %>/edit">edit campground</a>
+<a class="btn btn-primary" href="/campgrounds">back to index</a>
+<form action="/campgrounds/<%= campground._id %>?_method=DELETE" method="POST">
+    <button class="btn btn-danger">Delete campground</button>
+</form>

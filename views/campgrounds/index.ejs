@@ -1,20 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
+<% layout('layouts/boilerPlate') %>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>all campgrounds</title>
-</head>
+<h1 class="text-center">Browse your favourite Campgrounds!</h1>
 
-<body>
-    <h1>all campgrounds</h1>
-    <ul>
-        <% for(let campground of campgrounds){ %>
-        <li><a href="campgrounds/<%= campground._id %>"><%= campground.title %></a> </li>
-        <% } %>
-    </ul>
-    <a href="campgrounds/new">create campground</a>
-</body>
-
-</html>
+<div class="container-md d-flex flex-wrap justify-content-evenly p-3">
+    <% for(let campground of campgrounds){ %>
+    <div class="card m-3">
+        <img src="<%= campground.image %>" style="width: 300px; height: 350px;" class="card-img-top" alt="...">
+        <div class="card-body text-center">
+            <h5 class="card-title"><%= campground.title %></h5>
+            <div class="card-text"><%= campground.location %></div>
+            <a href="campgrounds/<%= campground._id %>" class="btn btn-dark mt-2">Details</a>
+        </div>
+    </div>
+    <% } %>
+</div>

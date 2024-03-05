@@ -2,32 +2,40 @@
 
 <div class="container mx-auto" style="width: 35rem;">
     <h2 class="text-center">Edit Campground</h2>
-    <form action="/campgrounds/<%=campground._id%>?_method=PUT" method="POST" class=" m-3 border rounded p-3">
+    <form action="/campgrounds/<%=campground._id%>?_method=PUT" method="POST"
+        class=" m-3 border rounded p-3 validation-form" novalidate>
         <div class="mb-2">
             <label for="title" class="form-label">Title</label>
-            <input type="text" class="form-control" id="title" name="campground[title]" value="<%= campground.title %>">
+            <input type="text" class="form-control" id="title" name="campground[title]" value="<%= campground.title %>"
+                required>
+            <div class="valid-feedback">looks good</div>
         </div>
         <div class="mb-2">
             <label for="location" class="form-label">Location</label>
             <input type="text" class="form-control" id="location" name="campground[location]"
-                value="<%= campground.location %>">
+                value="<%= campground.location %>" required>
+            <div class="valid-feedback">looks good</div>
         </div>
         <div class="mb-2">
             <label for="image" class="form-label">New Image URL</label>
-            <input type="text" class="form-control" id="image" name="campground[image]" value="<%= campground.image %>">
+            <input type="text" class="form-control" id="image" name="campground[image]" value="<%= campground.image %>"
+                required>
+            <div class="valid-feedback">looks good</div>
         </div>
         <div class="mb-2">
             <label for="price" class="form-label">price</label>
             <div class="input-group">
                 <span class="input-group-text">$</span>
                 <input type="number" class="form-control" id="price" name="campground[price] "
-                    value="<%= campground.price %>">
+                    value="<%= campground.price %>" required>
+                <div class="valid-feedback">looks good</div>
             </div>
         </div>
         <div class="mb-2">
             <label for="description" class="form-label">description</label>
-            <textarea class="form-control" id="description"
-                name="campground[description]"><%= campground.description %></textarea>
+            <textarea class="form-control" id="description" name="campground[description]"
+                required><%= campground.description %></textarea>
+            <div class="valid-feedback">looks good</div>
         </div>
         <button type="submit" class="btn btn-success">Save Changes</button>
     </form>

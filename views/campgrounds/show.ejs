@@ -12,9 +12,9 @@
     <button class="btn btn-danger">Delete campground</button>
 </form> -->
 
-<div class="container d-flex justify-content-center mb-4">
-    <div class="card" style="width: 30rem;">
-        <img src="<%= campground.image %>" class="card-img-top" alt="...">
+<div class="container d-flex flex-row justify-content-center mb-4 row">
+    <div class="card col-6">
+        <img src="<%= campground.image %>" class="card-img-top mt-2" alt="...">
         <div class="card-body">
             <h5 class="card-title"><%= campground.title %></h5>
             <p class="card-text"><%= campground.description %></p>
@@ -35,4 +35,34 @@
         </ul>
         <div class="card-footer text-muted">2 days ago</div>
     </div>
+
+    <div class="col-4 mx-3">
+        <div class="my-4">
+            <h2>Leave a review</h2>
+            <form action="/campgrounds/<%= campground._id %>/reviews" method="POST" class="validation-form" novalidate>
+                <div class="mb-3">
+                    <label class="d-inline" for="ratings">Rating </label>
+                    <input type="range" min="1" max="5" style="width: 10rem;" class="form-control d-inline mx-3"
+                        id="ratings" name="review[ratings]">
+                </div>
+                <label for="body">Review</label>
+                <textarea class="mb-3 form-control" id="body" name="review[body]" required></textarea>
+                <button class="btn btn-success">submit</button>
+            </form>
+        </div>
+
+        <div class="mb-3">
+            <% for(let review of campground.reviews){ %>
+            <div class="border rounded m-1 p-3">
+                <b>ratings: <%= review.ratings %></b>
+                <div><%= review.body%></div>
+                <form action="/campgrounds/<%= campground._id %>/reviews/<%= review._id %>?_method=DELETE"
+                    method="POST">
+                    <button class="btn btn-danger btn-sm mt-2"> delete </button>
+                </form>
+            </div>
+            <% } %>
+        </div>
+    </div>
+
 </div>

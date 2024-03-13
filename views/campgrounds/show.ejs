@@ -27,7 +27,7 @@
                 <p class="card-text">$<%= campground.price %>/night</p>
             </li>
             <li class="list-group-item">
-                <a href="/campground/<%= campground._id %>/edit" class="btn btn-sm btn-info">Edit Campground</a>
+                <a href="/campgrounds/<%= campground._id %>/edit" class="btn btn-sm btn-info">Edit Campground</a>
                 <form action="/campgrounds/<%= campground._id %>?_method=DELETE" class="d-inline-block" method="POST">
                     <button class="btn btn-sm btn-danger d-inline-block">Delete campground</button>
                 </form>

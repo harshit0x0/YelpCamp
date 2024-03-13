@@ -11,6 +11,8 @@ const ExpressError = require('./utils/ExpressErrors');
 const { campgroundSchema, reviewSchema } = require('./schemas.js');
 const campgrounds = require('./routes/campground.js')
 const reviews = require('./routes/reviews.js')
+const session = require('express-session')
+const flash = require('connect-flash')
 
 mongoose.connect('mongodb://127.0.0.1:27017/yelp-camp');
 mongoose.connection.on("error", console.error.bind(console, "connection error:"));
@@ -19,16 +21,33 @@ mongoose.connection.once("open", () => {
 })
 
 app.set("views", path.join(__dirname, '/views'));
-app.set("view enjine", 'ejs');
+app.set("view engine", 'ejs');
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(methodOverride('_method'));
 app.engine('ejs', ejsMate);
 app.use(express.static(path.join(__dirname, 'public')));
+const sessionConfig = {
+    secret: "secretKey",
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+        maxAge: 1000 * 60 * 60 * 24 * 7,
+        httpOnly: true
+    }
+}
+app.use(session(sessionConfig));
+app.use(flash());
+app.use((req, res, next) => {
+    res.locals.success = req.flash("success");
+    res.locals.error = req.flash("error");
+    next();
+})
+
+
 app.use('/campgrounds', campgrounds);
 app.use('/campgrounds/:id/reviews', reviews);
-
-
 app.get('/', (req, res) => {
     res.render("home.ejs");
 })

@@ -13,6 +13,9 @@ const campgrounds = require('./routes/campground.js')
 const reviews = require('./routes/reviews.js')
 const session = require('express-session')
 const flash = require('connect-flash')
+const User = require('./models/user')
+const passport = require('passport');
+const LocalStratergy = require('passport-local')
 
 mongoose.connect('mongodb://127.0.0.1:27017/yelp-camp');
 mongoose.connection.on("error", console.error.bind(console, "connection error:"));
@@ -44,12 +47,22 @@ app.use((req, res, next) => {
     res.locals.error = req.flash("error");
     next();
 })
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStratergy(User.authenticate()));
+passport.serializeUser(User.serializeUser);
 
 
 app.use('/campgrounds', campgrounds);
 app.use('/campgrounds/:id/reviews', reviews);
 app.get('/', (req, res) => {
     res.render("home.ejs");
+})
+
+app.get('/fakeUser', async (req, res) => {
+    const user = new User({ username: 'harry', email: 'harrytooscary@scary.com' });
+    const newUser = await User.register(user, 'potter');
+    res.send(newUser);
 })
 
 app.all('*', (req, res, next) => {

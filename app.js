@@ -9,8 +9,9 @@ const ejsMate = require('ejs-mate')
 const catchAsync = require('./utils/catchAsync');
 const ExpressError = require('./utils/ExpressErrors');
 const { campgroundSchema, reviewSchema } = require('./schemas.js');
-const campgrounds = require('./routes/campground.js')
-const reviews = require('./routes/reviews.js')
+const campgroundRoutes = require('./routes/campground.js')
+const reviewRoutes = require('./routes/reviews.js')
+const userRoutes = require('./routes/users.js');
 const session = require('express-session')
 const flash = require('connect-flash')
 const User = require('./models/user')
@@ -50,17 +51,18 @@ app.use((req, res, next) => {
 app.use(passport.initialize());
 app.use(passport.session());
 passport.use(new LocalStratergy(User.authenticate()));
-passport.serializeUser(User.serializeUser);
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
-
-app.use('/campgrounds', campgrounds);
-app.use('/campgrounds/:id/reviews', reviews);
+app.use('/', userRoutes);
+app.use('/campgrounds', campgroundRoutes);
+app.use('/campgrounds/:id/reviews', reviewRoutes);
 app.get('/', (req, res) => {
     res.render("home.ejs");
 })
 
 app.get('/fakeUser', async (req, res) => {
-    const user = new User({ username: 'harry', email: 'harrytooscary@scary.com' });
+    const user = new User({ username: 'harrry', email: 'harrrytooscary@scary.com' });
     const newUser = await User.register(user, 'potter');
     res.send(newUser);
 })

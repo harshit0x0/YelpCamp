@@ -5,7 +5,7 @@ const ExpressError = require('../utils/ExpressErrors');
 const Campground = require("../models/campground");
 const { campgroundSchema } = require('../schemas.js');
 const methodOverride = require('method-override');
-const isLoggedin = require('../utils/middlewares');
+const { isLoggedin } = require('../utils/middlewares');
 
 router.use(methodOverride('_method'));
 

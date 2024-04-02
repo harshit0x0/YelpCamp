@@ -23,7 +23,8 @@ const seedsDb = async () => {
             image: `${sample(images)}`,
             description: `
 Lorem ipsum, dolor sit amet consectetur adipisicing elit. Facilis quod ea eum cumque magnam deserunt, mollitia deleniti soluta aliquam numquam, quo dolor necessitatibus atque provident corrupti iusto dolorem quia! Laboriosam.`,
-            price: random1000
+            price: random1000,
+            author: '660c517462fc973fbd50c3fa'
         })
         await camp.save();
     }

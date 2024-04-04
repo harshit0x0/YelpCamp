@@ -38,11 +38,12 @@
         <div class="card-footer text-muted">2 days ago</div>
         <div class="card-footer">suggested by: <%= campground.author.username %></div>
     </div>
-
-    <div class="col-4 mx-3">
-        <div class="my-4">
+    <div class="col-4 mx-3 my-2">
+        <% if(currentUser){ %>
+        <div class="mb-5">
             <h2>Leave a review</h2>
-            <form action="/campgrounds/<%= campground._id %>/reviews" method="POST" class="validation-form" novalidate>
+            <form action="/campgrounds/<%= campground._id %>/reviews" method="POST" class="validation-form mt-2"
+                novalidate>
                 <div class="mb-3">
                     <label class="d-inline" for="ratings">Rating </label>
                     <input type="range" min="1" max="5" style="width: 10rem;" class="form-control d-inline mx-3"
@@ -53,16 +54,19 @@
                 <button class="btn btn-success">submit</button>
             </form>
         </div>
-
-        <div class="mb-3">
+        <% } %>
+        <div class="mx-auto">
             <% for(let review of campground.reviews){ %>
-            <div class="border rounded m-1 p-3">
-                <b>ratings: <%= review.ratings %></b>
-                <div><%= review.body%></div>
+            <div class="border rounded p-3 m-2 ">
+                <div class="mb-2">Ratings: <%= review.ratings %></div>
+                <div class="mb-1 h6"><i>by- <%= review.author.username %></i></div>
+                <div class="blockquote"><%= review.body%></div>
+                <% if(currentUser && review.author._id.equals(currentUser._id) ){ %>
                 <form action="/campgrounds/<%= campground._id %>/reviews/<%= review._id %>?_method=DELETE"
                     method="POST">
                     <button class="btn btn-danger btn-sm mt-2"> delete </button>
                 </form>
+                <% } %>
             </div>
             <% } %>
         </div>

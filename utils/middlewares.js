@@ -1,4 +1,4 @@
-const { campgroundSchema, reviewSchema } = require('../schemas.js');
+const { campgroundSchema, reviewSchema } = require('../schemas');
 const ExpressError = require('./ExpressErrors');
 const Campground = require("../models/campground");
 const Review = require('../models/review');
@@ -21,6 +21,7 @@ module.exports.isLoggedin = (req, res, next) => {
 
 module.exports.validateCampground = (req, res, next) => {
     const { error } = campgroundSchema.validate(req.body);
+    console.log(req.body);
     if (error) {
         const message = error.details.map(el => el.message).join(',');
         throw new ExpressError(message, 400)

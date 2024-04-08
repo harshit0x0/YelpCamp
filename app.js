@@ -1,14 +1,14 @@
+if (process.env.NODE_ENV !== "production") {
+    require('dotenv').config();
+}
+
 const express = require("express")
 const app = express();
 const path = require("path")
 const mongoose = require("mongoose")
-const Campground = require("./models/campground");
-const Review = require("./models/review");
 const methodOverride = require('method-override');
 const ejsMate = require('ejs-mate')
-const catchAsync = require('./utils/catchAsync');
 const ExpressError = require('./utils/ExpressErrors');
-const { campgroundSchema, reviewSchema } = require('./schemas.js');
 const campgroundRoutes = require('./routes/campground.js')
 const reviewRoutes = require('./routes/reviews.js')
 const userRoutes = require('./routes/users.js');
@@ -49,7 +49,6 @@ passport.use(new LocalStratergy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 app.use((req, res, next) => {
-    // console.log(req.session);
     res.locals.currentUser = req.user;
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");

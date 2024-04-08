@@ -5,7 +5,7 @@
 <div class="container-md d-flex flex-wrap justify-content-evenly p-3">
     <% for(let campground of campgrounds){ %>
     <div class="card m-3">
-        <img src="<%= campground.image %>" style="width: 300px; height: 350px;" class="card-img-top" alt="...">
+        <img src="<%= campground.images[0].url %>" style="width: 300px; height: 350px;" class="card-img-top" alt="...">
         <div class="card-body text-center">
             <h5 class="card-title"><%= campground.title %></h5>
             <div class="card-text"><%= campground.location %></div>

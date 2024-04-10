@@ -1,5 +1,6 @@
 <% layout('layouts/boilerPlate') %>
 <link rel="stylesheet" href="/stylesheets/stars.css">
+<link rel="stylesheet" href="/stylesheets/map.css">
 
 <div class="container d-flex flex-row justify-content-center mb-4 row">
 
@@ -49,11 +50,11 @@
         <div class="card-footer">suggested by: <%= campground.author.username %></div>
     </div>
 
-
-    <div class="col-4 mx-3 my-2">
-
+    <div class="col-4 mx-3 my-2 d-flex flex-column">
+        <div id="map"></div>
+        <div class="mt-5 border rounded p-4">
         <% if(currentUser){ %>
-        <div class="mb-5">
+            <div class="mb-5">
             <h2>Leave a review</h2>
             <form action="/campgrounds/<%= campground._id %>/reviews" method="POST" class="validation-form mt-2"
                 novalidate>
@@ -78,10 +79,10 @@
                     <button class="btn btn-success">submit</button>
                 </div>
             </form>
-        </div>
+            </div>
         <% } %>
-
-        <div class="mx-auto">
+        </div>
+        <div class="">
             <% for(let review of campground.reviews){ %>
             <div class="border rounded p-3 m-2 ">
                 <div class="mb-1 h4"><%= review.author.username %></div>
@@ -98,9 +99,17 @@
                 </form>
                 <% } %>
             </div>
-            <% } %>
+            <% } %>    
         </div>
-
     </div>
 
 </div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script>
+    const lat = '<%-campground.lat%>';
+    const lon = '<%-campground.lon%>';
+    const popupContent = "<h6><%= campground.title %></h6><p><%= campground.location %></p>";
+</script>
+<script src="/javascripts/showPageMaps.js"></script>

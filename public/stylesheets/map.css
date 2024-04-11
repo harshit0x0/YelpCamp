@@ -1,5 +1,5 @@
 #map {
-    height: 250px;
-    width: 450px;
+    min-height: 200px;
+    width: 100%;
     border: 1px solid red;
 }

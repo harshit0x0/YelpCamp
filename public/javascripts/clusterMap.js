@@ -10,13 +10,24 @@ const campgrounds = (campgroundData.features);
 
 const markers = L.markerClusterGroup();
 for (let campground of campgrounds) {
-    const newMarker = L.marker(new L.latLng(campground.lat, campground.lon));    popupContent = 
-        `<a href="campgrounds/${campground._id}"> 
-        <h5> ${campground.title} </h5> </a>
-        <p> ${campground.location} </p>
-        <img src = ${campground.images[0].url.replace('/upload', '/upload/w_200') }>`;
+    const newMarker = L.marker(new L.latLng(campground.lat, campground.lon));    
+    popupContent = 
+        `
+        <a class="popUpLink" href="campgrounds/${campground._id}"> ${campground.title} </a>
+        <p class="popUpLocation"> ${campground.location} </p>
+        <img class="popUpImg" src = ${campground.images[0].url.replace('/upload', '/upload/w_200') }>
+        `;
 
-    newMarker.bindPopup(popupContent).openPopup();
+    newMarker.bindPopup(popupContent);
+    popupContent.onload = function () {
+        newMarker.openPopup();
+    };
     markers.addLayer(newMarker);
 }
 map.addLayer(markers);
+
+map.on('popupopen', function (e) {
+    $('img.popUpImg').on('load', function () {
+        e.popup.update()
+    })
+})

@@ -2,9 +2,9 @@
 <link rel="stylesheet" href="/stylesheets/stars.css">
 <link rel="stylesheet" href="/stylesheets/map.css">
 
-<div class="container d-flex flex-row justify-content-center mb-4 row">
+<div class="d-flex flex-row justify-content-center mb-4 row" style="width: 90vw;">
 
-    <div class="card col-6">
+    <div class="card col-4 align-self-start p-0">
         <div id="CampgroundCarousel" class="carousel slide">
             <div class="carousel-inner">
                 <% campground.images.forEach((img,i)=> { %>
@@ -50,9 +50,9 @@
         <div class="card-footer">suggested by: <%= campground.author.username %></div>
     </div>
 
-    <div class="col-4 mx-3 my-2 d-flex flex-column">
+    <div class="col-5 mx-3 my-2 d-flex flex-column">
         <div id="map"></div>
-        <div class="mt-5 border rounded p-4">
+        <div class="mt-5 border rounded p-4 pb-0">
         <% if(currentUser){ %>
             <div class="mb-5">
             <h2>Leave a review</h2>
@@ -83,8 +83,8 @@
         <% }else{ %>
             <p>Log in to leave a review</p>
         <% } %>
-
         </div>
+
         <div class="">
             <% for(let review of campground.reviews){ %>
             <div class="border rounded p-3 m-2 ">

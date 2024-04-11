@@ -17,6 +17,8 @@ const flash = require('connect-flash')
 const User = require('./models/user')
 const passport = require('passport');
 const LocalStratergy = require('passport-local')
+const mongoSanitize = require('express-mongo-sanitize');
+const helmet = require('helmet');
 
 mongoose.connect('mongodb://127.0.0.1:27017/yelp-camp');
 mongoose.connection.on("error", console.error.bind(console, "connection error:"));
@@ -26,19 +28,45 @@ mongoose.connection.once("open", () => {
 
 app.set("views", path.join(__dirname, '/views'));
 app.set("view engine", 'ejs');
+app.use(mongoSanitize());
+
+app.use(helmet());
+const {connectSrcUrls, scriptSrcUrls, imgSrcUrls, fontSrcUrls, styleSrcUrls} = require("./public/sources.js");
+app.use(
+    helmet.contentSecurityPolicy({
+        directives: {
+            defaultSrc: [],
+            connectSrc: ["'self'", ...connectSrcUrls],
+            scriptSrc: ["'unsafe-inline'", "'self'", ...scriptSrcUrls],
+            styleSrc: ["'self'", "'unsafe-inline'", ...styleSrcUrls],
+            workerSrc: ["'self'", "blob:"],
+            objectSrc: [],
+            imgSrc: [
+                "'self'",
+                "blob:",
+                "data:",
+                ...imgSrcUrls
+            ],
+            fontSrc: ["'self'", ...fontSrcUrls],
+        },
+    })
+);
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(methodOverride('_method'));
 app.engine('ejs', ejsMate);
 app.use(express.static(path.join(__dirname, 'public')));
 const sessionConfig = {
+    name: "session",
     secret: "secretKey",
     resave: false,
     saveUninitialized: true,
     cookie: {
         expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
         maxAge: 1000 * 60 * 60 * 24 * 7,
-        httpOnly: true
+        httpOnly: true,
+        //secure: true
     }
 }
 app.use(session(sessionConfig));
@@ -58,6 +86,7 @@ app.use((req, res, next) => {
 app.use('/', userRoutes);
 app.use('/campgrounds', campgroundRoutes);
 app.use('/campgrounds/:id/reviews', reviewRoutes);
+
 app.get('/', (req, res) => {
     res.render("home.ejs");
 })

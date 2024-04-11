@@ -61,13 +61,13 @@
                 <div class="mb-3">
                     <label class="d-inline" for="ratings">Rating </label>
                     <fieldset class="starability-basic ">
-                        <input type="radio" id="no-rate" class="input-no-rate" name="review[ratings]" value="0" checked
+                        <input type="radio" id="no-rate" class="input-no-rate" name="review[ratings]" value="0"
                             aria-label="No rating." />
                         <input type="radio" id="first-rate1" name="review[ratings]" value="1" />
                         <label for="first-rate1" title="Terrible">1 star</label>
                         <input type="radio" id="first-rate2" name="review[ratings]" value="2" />
                         <label for="first-rate2" title="Not good">2 stars</label>
-                        <input type="radio" id="first-rate3" name="review[ratings]" value="3" />
+                        <input type="radio" id="first-rate3" name="review[ratings]" value="3" checked />
                         <label for="first-rate3" title="Average">3 stars</label>
                         <input type="radio" id="first-rate4" name="review[ratings]" value="4" />
                         <label for="first-rate4" title="Very good">4 stars</label>
@@ -80,7 +80,10 @@
                 </div>
             </form>
             </div>
+        <% }else{ %>
+            <p>Log in to leave a review</p>
         <% } %>
+
         </div>
         <div class="">
             <% for(let review of campground.reviews){ %>

@@ -21,8 +21,8 @@ const LocalStratergy = require('passport-local')
 const mongoSanitize = require('express-mongo-sanitize');
 const helmet = require('helmet');
 
-const dbURL = 'mongodb://127.0.0.1:27017/yelp-camp';
-// const dbURL = process.env.db_URL;
+// const dbURL = 'mongodb://127.0.0.1:27017/yelp-camp';
+const dbURL = process.env.db_URL;
 
 mongoose.connect(dbURL);
 mongoose.connection.on("error", console.error.bind(console, "connection error:"));

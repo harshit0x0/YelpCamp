@@ -2,7 +2,7 @@
     height: 300px;
     width: 75vw;
     margin: 5px auto;
-    border: 1px solid red;
+    /* border: 1px solid red; */
 }
 
 .leaflet-popup-content-wrapper, .leaflet-popup-content-wrapper, .leaflet-popup-content {
@@ -15,7 +15,7 @@
 }
 
 .leaflet-popup-tip-container {
-    border: 3px solid yellow;
+    /* border: 3px solid yellow; */
 }
 
 
@@ -35,6 +35,7 @@
     text-align: center;
     /* border: 1px solid red; */
     max-width: 9rem;
+    max-height: 5rem;
     font-weight: 400;
     color: rgba(197, 119, 24, 0.964);
     margin: 3px auto !important;

@@ -35,7 +35,7 @@ app.set("view engine", 'ejs');
 app.use(mongoSanitize());
 
 app.use(helmet());
-const {connectSrcUrls, scriptSrcUrls, imgSrcUrls, fontSrcUrls, styleSrcUrls} = require("./public/sources.js");
+const { connectSrcUrls, scriptSrcUrls, imgSrcUrls, fontSrcUrls, styleSrcUrls } = require("./public/sources.js");
 app.use(
     helmet.contentSecurityPolicy({
         directives: {
@@ -64,7 +64,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 const store = mongoStore.create({
     mongoUrl: dbURL,
-    touchAfter: 24*3600,
+    touchAfter: 24 * 3600,
     crypto: {
         secret: 'cgfbdgfbgsdfgffbvfswer!'
     }

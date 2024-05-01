@@ -51,11 +51,16 @@ module.exports.editCampground = async (req, res) => {
 }
 
 module.exports.createCampground = async (req, res) => {
+    const location = req.body.campground.location;
+    const response = await fetch(`https://api.geoapify.com/v1/geocode/search?text=${location}&format=json&apiKey=b3a7ec2dbbe7452290afb58a482f3457`);
+    const data = await response.json();
     const campground = new Campground(req.body.campground);
+    campground.lat = data.results[0].lat;
+    campground.lon = data.results[0].lon;
     campground.images = req.files.map(f => ({ url: f.path, filename: f.filename }));
     campground.author = req.user._id;
     await campground.save();
-    // console.log(campground);
+    console.log(campground);
     req.flash('success', "Succefully created new campground!");
     res.redirect(`/campgrounds/${campground._id}`)
 }

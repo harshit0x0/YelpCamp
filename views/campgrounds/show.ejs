@@ -1,9 +1,10 @@
 <% layout('layouts/boilerPlate') %>
 <link rel="stylesheet" href="/stylesheets/stars.css">
+<link rel="stylesheet" href="/stylesheets/map.css">
 
-<div class="container d-flex flex-row justify-content-center mb-4 row">
+<div class="d-flex flex-row justify-content-center mb-5 row" style="width: 90vw;">
 
-    <div class="card col-6">
+    <div class="card col-4 align-self-start p-0">
         <div id="CampgroundCarousel" class="carousel slide">
             <div class="carousel-inner">
                 <% campground.images.forEach((img,i)=> { %>
@@ -49,24 +50,24 @@
         <div class="card-footer">suggested by: <%= campground.author.username %></div>
     </div>
 
-
-    <div class="col-4 mx-3 my-2">
-
+    <div class="col-5 mx-3 my-2 d-flex flex-column">
+        <div id="map"></div>
+        <div class="mt-5 border rounded p-4 pb-0">
         <% if(currentUser){ %>
-        <div class="mb-5">
+            <div class="mb-5">
             <h2>Leave a review</h2>
             <form action="/campgrounds/<%= campground._id %>/reviews" method="POST" class="validation-form mt-2"
                 novalidate>
                 <div class="mb-3">
                     <label class="d-inline" for="ratings">Rating </label>
                     <fieldset class="starability-basic ">
-                        <input type="radio" id="no-rate" class="input-no-rate" name="review[ratings]" value="0" checked
+                        <input type="radio" id="no-rate" class="input-no-rate" name="review[ratings]" value="0"
                             aria-label="No rating." />
                         <input type="radio" id="first-rate1" name="review[ratings]" value="1" />
                         <label for="first-rate1" title="Terrible">1 star</label>
                         <input type="radio" id="first-rate2" name="review[ratings]" value="2" />
                         <label for="first-rate2" title="Not good">2 stars</label>
-                        <input type="radio" id="first-rate3" name="review[ratings]" value="3" />
+                        <input type="radio" id="first-rate3" name="review[ratings]" value="3" checked />
                         <label for="first-rate3" title="Average">3 stars</label>
                         <input type="radio" id="first-rate4" name="review[ratings]" value="4" />
                         <label for="first-rate4" title="Very good">4 stars</label>
@@ -78,10 +79,13 @@
                     <button class="btn btn-success">submit</button>
                 </div>
             </form>
-        </div>
+            </div>
+        <% }else{ %>
+            <p>Log in to leave a review</p>
         <% } %>
+        </div>
 
-        <div class="mx-auto">
+        <div class="">
             <% for(let review of campground.reviews){ %>
             <div class="border rounded p-3 m-2 ">
                 <div class="mb-1 h4"><%= review.author.username %></div>
@@ -98,9 +102,17 @@
                 </form>
                 <% } %>
             </div>
-            <% } %>
+            <% } %>    
         </div>
-
     </div>
 
 </div>
+
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+<script>
+    const lat = '<%-campground.lat%>';
+    const lon = '<%-campground.lon%>';
+    const popupContent = "<h6><%= campground.title %></h6><p><%= campground.location %></p>";
+</script>
+<script src="/javascripts/showPageMaps.js"></script>
